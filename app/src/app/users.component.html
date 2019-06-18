@@ -1,0 +1,58 @@
+<h1>Registration</h1>
+
+<ng-template #create>
+   <h3> Create New Article </h3>
+</ng-template>
+<div>
+ <form [formGroup]="usersForm" (ngSubmit)="onUsersFormSubmit()">
+ 
+    <p>
+		<input formControlName="mobileNo" placeholder="Mobile Number">
+	       <label *ngIf="usersForm.get('mobileNo').invalid && processValidation" [ngClass] = "'error'">Mobile number is required</label>
+    </p>
+    <p><input formControlName="firstName" placeholder="First Name">
+	       <label *ngIf="usersForm.get('firstName').invalid && processValidation" [ngClass] = "'error'">First name is required</label>
+	</p>	
+	<p><input formControlName="lastName" placeholder="Last Name">
+	       <label *ngIf="usersForm.get('lastName').invalid && processValidation" [ngClass] = "'error'">Last name is required </label>
+   	</p>
+    <p><input formControlName="dob" placeholder="Date Of Birth (YYYY-MM-DD))">
+	       <label *ngIf="usersForm.get('dob').invalid && processValidation" [ngClass] = "'error'"> </label>
+	</p>
+	 <div>
+		<input formControlName="gender" placeholder="gender (F/M)">
+	       <label *ngIf="usersForm.get('gender').invalid && processValidation" [ngClass] = "'error'"> </label>
+	 </div>
+		 
+
+	 <p><input formControlName="email" placeholder="email">
+	       <label *ngIf="usersForm.get('email').invalid && processValidation" [ngClass] = "'error'"> Email is required</label>
+	 </p>
+    
+	    <button (click)="onUsersFormSubmit()">Register</button>  
+	
+ 
+ </form> 
+ <br/>
+ <div *ngIf="statusCode; else processing">
+   <div *ngIf="statusCode === 201" [ngClass] = "'success'">
+	    Users added successfully.
+   </div>   
+   <div *ngIf="statusCode === 409" [ngClass] = "'error'">
+        Email is already used.
+   </div>   	
+   <div *ngIf="statusCode === 200" [ngClass] = "'error'">
+        Phone Number is already used.
+   </div>   	      
+   <div *ngIf="statusCode === 204" [ngClass] = "'success'">
+        Article deleted successfully.
+   </div>   	   
+   <div *ngIf="statusCode === 500" [ngClass] = "'error'">
+        Internal Server Error.
+   </div>   	
+ </div>
+ <ng-template #processing>
+	<img *ngIf="requestProcessing" src="assets/images/loading.gif">
+ </ng-template>
+</div>
+
